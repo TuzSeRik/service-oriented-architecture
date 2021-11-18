@@ -1,4 +1,4 @@
-package dev.tuzserik.service.oriented.architecture.lab1server.utils;
+package dev.tuzserik.service.oriented.architecture.lab1.server.utils;
 
 public enum ComparisonSign {
     LS,

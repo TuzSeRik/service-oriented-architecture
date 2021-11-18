@@ -1,8 +1,8 @@
-package dev.tuzserik.service.oriented.architecture.lab1server.servlets;
+package dev.tuzserik.service.oriented.architecture.lab1.server.servlets;
 
 import com.google.gson.Gson;
-import dev.tuzserik.service.oriented.architecture.lab1server.persistence.Datasource;
-import dev.tuzserik.service.oriented.architecture.lab1server.utils.QueryBuilder;
+import dev.tuzserik.service.oriented.architecture.lab1.server.utils.QueryBuilder;
+import dev.tuzserik.service.oriented.architecture.lab1.server.persistence.Datasource;
 import org.hibernate.Session;
 
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "wheelsNumberSearcher", value = "/wheels-number-searcher")
-public class WheelsNumberSearcher extends HttpServlet {
+@WebServlet(name = "distanceCalculator", value = "/distance-calculator")
+public class DistanceCalculator extends HttpServlet {
     private Gson gson;
 
     @Override
@@ -28,9 +28,7 @@ public class WheelsNumberSearcher extends HttpServlet {
 
             response.setStatus(200);
             response.getWriter().write(
-                    gson.toJson(QueryBuilder.getPreparedQueryWheelsNumberEqual(
-                            session, request.getParameter("wheels-number-equal")
-                    ).getResultList())
+                    gson.toJson(QueryBuilder.getPreparedQueryDistanceSum(session).getSingleResult())
             );
         }
         catch (Exception e) {

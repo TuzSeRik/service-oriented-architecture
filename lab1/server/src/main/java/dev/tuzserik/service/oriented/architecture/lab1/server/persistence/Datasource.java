@@ -1,8 +1,8 @@
-package dev.tuzserik.service.oriented.architecture.lab1server.persistence;
+package dev.tuzserik.service.oriented.architecture.lab1.server.persistence;
 
-import dev.tuzserik.service.oriented.architecture.lab1server.model.Coordinates;
-import dev.tuzserik.service.oriented.architecture.lab1server.model.FuelType;
-import dev.tuzserik.service.oriented.architecture.lab1server.model.Vehicle;
+import dev.tuzserik.service.oriented.architecture.lab1.server.model.Coordinates;
+import dev.tuzserik.service.oriented.architecture.lab1.server.model.FuelType;
+import dev.tuzserik.service.oriented.architecture.lab1.server.model.Vehicle;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;

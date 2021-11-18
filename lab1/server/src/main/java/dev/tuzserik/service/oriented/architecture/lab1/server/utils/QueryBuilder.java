@@ -1,14 +1,13 @@
-package dev.tuzserik.service.oriented.architecture.lab1server.utils;
+package dev.tuzserik.service.oriented.architecture.lab1.server.utils;
 
-import dev.tuzserik.service.oriented.architecture.lab1server.model.Coordinates;
-import dev.tuzserik.service.oriented.architecture.lab1server.model.Vehicle;
+import dev.tuzserik.service.oriented.architecture.lab1.server.model.Coordinates;
+import dev.tuzserik.service.oriented.architecture.lab1.server.model.Vehicle;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 

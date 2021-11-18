@@ -6,19 +6,19 @@
 
     <servlet>
         <servlet-name>basicOperationsPerformer</servlet-name>
-        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1server.servlets.BasicOperationsPerformer</servlet-class>
+        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1.server.servlets.BasicOperationsPerformer</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>distanceCalculator</servlet-name>
-        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1server.servlets.DistanceCalculator</servlet-class>
+        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1.server.servlets.DistanceCalculator</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>distanceTravelledSearcher</servlet-name>
-        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1server.servlets.DistanceTravelledSearcher</servlet-class>
+        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1.server.servlets.DistanceTravelledSearcher</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>wheelsNumberSearcher</servlet-name>
-        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1server.servlets.WheelsNumberSearcher</servlet-class>
+        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1.server.servlets.WheelsNumberSearcher</servlet-class>
     </servlet>
 
     <servlet-mapping>

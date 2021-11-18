@@ -1,8 +1,8 @@
-package dev.tuzserik.service.oriented.architecture.lab1server.servlets;
+package dev.tuzserik.service.oriented.architecture.lab1.server.servlets;
 
 import com.google.gson.Gson;
-import dev.tuzserik.service.oriented.architecture.lab1server.persistence.Datasource;
-import dev.tuzserik.service.oriented.architecture.lab1server.utils.QueryBuilder;
+import dev.tuzserik.service.oriented.architecture.lab1.server.utils.QueryBuilder;
+import dev.tuzserik.service.oriented.architecture.lab1.server.persistence.Datasource;
 import org.hibernate.Session;
 
 import javax.servlet.annotation.WebServlet;

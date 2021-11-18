@@ -1,7 +1,7 @@
-package dev.tuzserik.service.oriented.architecture.lab1server.utils;
+package dev.tuzserik.service.oriented.architecture.lab1.server.utils;
 
-import dev.tuzserik.service.oriented.architecture.lab1server.model.Coordinates;
-import dev.tuzserik.service.oriented.architecture.lab1server.model.FuelType;
+import dev.tuzserik.service.oriented.architecture.lab1.server.model.Coordinates;
+import dev.tuzserik.service.oriented.architecture.lab1.server.model.FuelType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

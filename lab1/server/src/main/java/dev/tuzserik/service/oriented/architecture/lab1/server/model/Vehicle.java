@@ -1,4 +1,4 @@
-package dev.tuzserik.service.oriented.architecture.lab1server.model;
+package dev.tuzserik.service.oriented.architecture.lab1.server.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
