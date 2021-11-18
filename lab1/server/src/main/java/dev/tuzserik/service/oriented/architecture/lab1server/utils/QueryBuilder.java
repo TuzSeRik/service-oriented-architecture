@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -182,5 +183,29 @@ public class QueryBuilder {
         return buildQuery(session, builder, query,
                 new QueryParameters().setId(id).setIdSign(ComparisonSign.EQ)
         );
+    }
+
+    public static TypedQuery<Long> getPreparedQueryDistanceSum(Session session) {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<Vehicle> root = query.from(Vehicle.class);
+        CriteriaQuery<Long> builtQuery = query.select(builder.sum(root.get("distanceTravelled")));
+        return session.createQuery(builtQuery);
+    }
+
+    public static TypedQuery<Vehicle> getPreparedQueryDistanceTraveledLessThan(Session session, String distanceTravelled) {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Vehicle> query = builder.createQuery(Vehicle.class);
+
+        return buildQuery(session, builder, query,
+                new QueryParameters().setDistanceTravelled(distanceTravelled).setDistanceSign(ComparisonSign.LS));
+    }
+
+    public static TypedQuery<Vehicle> getPreparedQueryWheelsNumberEqual(Session session, String wheelsNumber) {
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Vehicle> query = builder.createQuery(Vehicle.class);
+
+        return buildQuery(session, builder, query,
+                new QueryParameters().setNumberOfWheels(wheelsNumber).setWheelsSign(ComparisonSign.EQ));
     }
 }

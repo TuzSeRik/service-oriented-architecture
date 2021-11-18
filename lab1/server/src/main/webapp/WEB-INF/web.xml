@@ -4,34 +4,37 @@
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
 
-    <error-page>
-        <exception-type>java.lang.NumberFormatException</exception-type>
-        <location>/errorHandler</location>
-    </error-page>
-    <error-page>
-        <exception-type>javax.persistence.PersistenceException</exception-type>
-        <location>/errorHandler</location>
-    </error-page>
-    <error-page>
-        <exception-type>javax.xml.bind.ValidationException</exception-type>
-        <location>/errorHandler</location>
-    </error-page>
-    <error-page>
-        <exception-type>java.text.ParseException</exception-type>
-        <location>/errorHandler</location>
-    </error-page>
-    <error-page>
-        <exception-type>com.google.gson.JsonSyntaxException</exception-type>
-        <location>/errorHandler</location>
-    </error-page>
-
     <servlet>
-        <servlet-name>humanBeing</servlet-name>
-        <servlet-class>ru.itmo.soa.servlet.HumanBeingServlet</servlet-class>
+        <servlet-name>basicOperationsPerformer</servlet-name>
+        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1server.servlets.BasicOperationsPerformer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>distanceCalculator</servlet-name>
+        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1server.servlets.DistanceCalculator</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>distanceTravelledSearcher</servlet-name>
+        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1server.servlets.DistanceTravelledSearcher</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>wheelsNumberSearcher</servlet-name>
+        <servlet-class>dev.tuzserik.service.oriented.architecture.lab1server.servlets.WheelsNumberSearcher</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>humanBeing</servlet-name>
-        <url-pattern>/human-being/*</url-pattern>
+        <servlet-name>basicOperationsPerformer</servlet-name>
+        <url-pattern>/basic-operations-performer/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>distanceCalculator</servlet-name>
+        <url-pattern>/distance-calculator/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>distanceTravelledSearcher</servlet-name>
+        <url-pattern>/distance-travelled-searcher/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>wheelsNumberSearcher</servlet-name>
+        <url-pattern>/wheels-number-searcher/*</url-pattern>
     </servlet-mapping>
 </web-app>

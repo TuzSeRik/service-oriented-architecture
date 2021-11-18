@@ -9,10 +9,13 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Datasource {
     private static SessionFactory sessionFactory;
+    public static List<Vehicle> cachedVehicles = new ArrayList<>();
 
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
@@ -23,7 +26,7 @@ public class Datasource {
 
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 settings.put(Environment.SHOW_SQL, "true");
-                settings.put(Environment.HBM2DDL_AUTO, "create-drop");
+                settings.put(Environment.HBM2DDL_AUTO, "create");
                 settings.put(Environment.HBM2DDL_CHARSET_NAME, "UTF-8");
                 settings.put(Environment.DATASOURCE, "java:/PostgresDS");
 

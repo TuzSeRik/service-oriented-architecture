@@ -9,23 +9,21 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
 @WebServlet(name = "basicOperationsPerformer", value = "/basic-operations-performer")
 public class BasicOperationsPerformer extends HttpServlet {
-    private List<Vehicle> vehicleList;
     private Gson gson;
 
+    @Override
     public void init() {
-        vehicleList = new ArrayList<>();
         gson = new Gson();
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Transaction transaction = null;
 
@@ -44,7 +42,7 @@ public class BasicOperationsPerformer extends HttpServlet {
                             .setFuelType(parameters.getFuelType())
                     ;
 
-            vehicleList.add(vehicle);
+            Datasource.cachedVehicles.add(vehicle);
 
             transaction.commit();
 
@@ -61,11 +59,12 @@ public class BasicOperationsPerformer extends HttpServlet {
         }
     }
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             if (request.getParameter("id-fast") != null) {
                 List<Vehicle> filteredVehicles =
-                        vehicleList.stream().filter(vehicle -> vehicle.getId() ==
+                        Datasource.cachedVehicles.stream().filter(vehicle -> vehicle.getId() ==
                                 Integer.parseInt(request.getParameter("id-fast"))).collect(Collectors.toList());
 
                 if (filteredVehicles.size() == 1) {
@@ -80,7 +79,7 @@ public class BasicOperationsPerformer extends HttpServlet {
 
                         if (particularVehicle.size() == 1) {
                             response.setStatus(200);
-                            response.getWriter().write(gson.toJson(vehicleList.get(0)));
+                            response.getWriter().write(gson.toJson(Datasource.cachedVehicles.get(0)));
                         }
                     }
                     catch (Exception e) {
@@ -93,8 +92,8 @@ public class BasicOperationsPerformer extends HttpServlet {
             }
             else {
                 try (Session session = Datasource.getSessionFactory().openSession()) {
-                    session.save(vehicleList);
-                    vehicleList.clear();
+                    session.save(Datasource.cachedVehicles);
+                    Datasource.cachedVehicles.clear();
                     List<Vehicle> allFilteredVehicles = QueryBuilder.getPreparedQuery(request, session).getResultList();
                     response.setStatus(200);
                     response.getWriter().write(gson.toJson(allFilteredVehicles));
@@ -111,33 +110,85 @@ public class BasicOperationsPerformer extends HttpServlet {
         }
     }
 
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String protocol = req.getProtocol();
-        String msg = "";
-        if (protocol.endsWith("1.1")) {
-            resp.sendError(405, msg);
-        } else {
-            resp.sendError(400, msg);
-        }
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Transaction transaction = null;
 
+        VehicleParameters parameters = new VehicleParameters(request);
+
+        Vehicle vehicle =
+                new Vehicle()
+                        .setName(parameters.getName())
+                        .setCoordinates(parameters.getCoordinates())
+                        .setEnginePower(parameters.getEnginePower())
+                        .setNumberOfWheels(parameters.getNumberOfWheels())
+                        .setDistanceTravelled(parameters.getDistanceTravelled())
+                        .setFuelType(parameters.getFuelType())
+                ;
+
+        vehicle.setId(Long.parseLong(request.getParameter("id")));
+
+        List<Vehicle> filteredVehicle = Datasource.cachedVehicles.stream().filter(v -> v.getId() == vehicle.getId()).collect(Collectors.toList());
+
+        if (!filteredVehicle.isEmpty()) {
+            Datasource.cachedVehicles.set(Datasource.cachedVehicles.indexOf(filteredVehicle.get(0)), vehicle);
+        }
+        else {
+            try (Session session = Datasource.getSessionFactory().openSession()) {
+                transaction = session.beginTransaction();
+                session.save(vehicle);
+                transaction.commit();
+
+                response.setStatus(200);
+                response.getWriter().write(gson.toJson(vehicle));
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+
+                response.sendError(500);
+            }
+        }
     }
 
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String protocol = req.getProtocol();
-        String msg = "";
-        if (protocol.endsWith("1.1")) {
-            resp.sendError(405, msg);
-        } else {
-            resp.sendError(400, msg);
-        }
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Transaction transaction = null;
+        long id = Long.parseLong(request.getParameter("id"));
 
+        List<Vehicle> filteredVehicle = Datasource.cachedVehicles.stream().filter(v -> v.getId() == id).collect(Collectors.toList());
+
+        if (!filteredVehicle.isEmpty()) {
+            Datasource.cachedVehicles.remove(filteredVehicle.get(0));
+        }
+        else
+            try (Session session = Datasource.getSessionFactory().openSession()) {
+                transaction = session.beginTransaction();
+                session.delete(id);
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+
+                response.sendError(500);
+            }
     }
 
+    @Override
     public void destroy() {
+        Transaction transaction = null;
+
         try (Session session = Datasource.getSessionFactory().openSession()) {
-            session.save(vehicleList);
+            transaction = session.beginTransaction();
+            session.save(Datasource.cachedVehicles);
+            transaction.commit();
         }
         catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
         }
     }
