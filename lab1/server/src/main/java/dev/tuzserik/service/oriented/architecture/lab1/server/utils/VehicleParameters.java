@@ -20,8 +20,8 @@ public class VehicleParameters {
     public VehicleParameters(HttpServletRequest request) {
         name = request.getParameter("name");
         coordinates = new Coordinates()
-                .setX(Long.parseLong(request.getParameter("coordinates-x")))
-                .setY(Float.parseFloat(request.getParameter("coordinates-y")));
+                .setX(Long.parseLong(request.getParameter("coordinate-x")))
+                .setY(Float.parseFloat(request.getParameter("coordinate-y")));
         enginePower = Float.parseFloat(request.getParameter("engine-power"));
         numberOfWheels = Integer.parseInt(request.getParameter("number-of-wheels"));
         distanceTravelled = Double.parseDouble(request.getParameter("distance-travelled"));

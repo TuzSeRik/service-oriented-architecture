@@ -3,10 +3,7 @@ package dev.tuzserik.service.oriented.architecture.lab1.server.model;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,7 +21,8 @@ public class Vehicle {
     @Size(min = 1, message = "Строка не может быть пустой")
     private String name;
 
-    @OneToOne @NotNull(message = "Поле не может быть null")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @NotNull(message = "Поле не может быть null")
     private Coordinates coordinates;
 
     @NotNull(message = "Поле не может быть null")
@@ -40,7 +38,7 @@ public class Vehicle {
     @Min(value = 0, message = "Значение поля должно быть больше 0")
     private Double distanceTravelled;
 
-    @NotNull(message = "Поле не может быть null")
+    @Enumerated(value = EnumType.ORDINAL) @NotNull(message = "Поле не может быть null")
     private FuelType fuelType;
 
     @Override

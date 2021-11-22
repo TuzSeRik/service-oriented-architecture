@@ -10,34 +10,34 @@ import java.util.Locale;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 public class QueryParameters {
-    private String id;
-    private ComparisonSign idSign;
+    private String id = null;
+    private ComparisonSign idSign = null;
 
-    private String name;
-    private Boolean isExactName;
+    private String name = null;
+    private Boolean isExactName = null;
 
-    private String coordinateX;
-    private ComparisonSign xSign;
+    private String coordinateX = null;
+    private ComparisonSign xSign = null;
 
-    private String coordinateY;
-    private ComparisonSign ySign;
+    private String coordinateY = null;
+    private ComparisonSign ySign = null;
 
-    private String enginePower;
-    private ComparisonSign engineSign;
+    private String enginePower = null;
+    private ComparisonSign engineSign = null;
 
-    private String numberOfWheels;
-    private ComparisonSign wheelsSign;
+    private String numberOfWheels = null;
+    private ComparisonSign wheelsSign = null;
 
-    private String distanceTravelled;
-    private ComparisonSign distanceSign;
+    private String distanceTravelled = null;
+    private ComparisonSign distanceSign = null;
 
-    private FuelType fuelType;
+    private FuelType fuelType = null;
 
-    private String sortField;
-    private Boolean isDesc;
+    private String sortField = null;
+    private Boolean isDesc = false;
 
-    private int page;
-    private int limit;
+    private int page = 0;
+    private int limit = 100;
 
     public QueryParameters(HttpServletRequest request) {
         id = request.getParameter("id");
@@ -65,7 +65,7 @@ public class QueryParameters {
                 ComparisonSign.valueOf(request.getParameter("wheels-sign").toUpperCase(Locale.ROOT)) : null);
 
         distanceTravelled = request.getParameter("distance-travelled");
-        distanceSign = (distanceSign != null ?
+        distanceSign = (distanceTravelled != null ?
                 ComparisonSign.valueOf(request.getParameter("distance-sign").toUpperCase(Locale.ROOT)) : null);
 
         fuelType = (request.getParameter("fuel-type") != null ?
@@ -75,10 +75,10 @@ public class QueryParameters {
         isDesc = (sortField != null ?
                 ComparisonSign.valueOf(request.getParameter("sort-sign")) == ComparisonSign.LS : null);
 
-        page = (request.getParameter("page") != null ?
-                Integer.parseInt(request.getParameter("page")) : 0);
-
         limit = (request.getParameter("limit") != null ?
                 Integer.parseInt(request.getParameter("limit")) : 10);
+
+        page = (request.getParameter("page") != null ?
+                Integer.parseInt(request.getParameter("page")) : 0);
     }
 }

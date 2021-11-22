@@ -23,8 +23,7 @@ public class DistanceTravelledSearcher extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try (Session session = Datasource.getSessionFactory().openSession()) {
-            session.save(Datasource.cachedVehicles);
-            Datasource.cachedVehicles.clear();
+            Datasource.flushCache(session);
 
             response.setStatus(200);
             response.getWriter().write(

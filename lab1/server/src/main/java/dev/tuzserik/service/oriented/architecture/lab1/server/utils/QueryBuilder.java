@@ -150,7 +150,7 @@ public class QueryBuilder {
         }
 
         if (parameters.getFuelType() != null) {
-            predicates.add(root.get("fuelType").as(String.class).in(parameters.getFuelType()));
+            predicates.add(builder.equal(root.get("fuelType"), parameters.getFuelType().ordinal()));
         }
 
         CriteriaQuery<Vehicle> builtQuery = query.select(root).where(predicates.toArray(new Predicate[0]));
