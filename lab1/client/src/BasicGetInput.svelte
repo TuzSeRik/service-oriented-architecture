@@ -25,7 +25,7 @@
     }
 
     const sendData = async () => {
-        let answer = await fetch("http://localhost:8080/lab1_server_war_exploded/basic-operations-performer?"
+        let answer = await fetch("http://localhost:8080/lab1_server_war_exploded/vehicles?"
             + new URLSearchParams(data).toString(),
             {
                 method: 'GET'
@@ -45,7 +45,7 @@
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
             <option value="GE">Greater or Equal</option>
-            <option value="GT">Greater</option>
+            <option value="GR">Greater</option>
         </select>
     </label>
 
@@ -66,7 +66,7 @@
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
             <option value="GE">Greater or Equal</option>
-            <option value="GT">Greater</option>
+            <option value="GR">Greater</option>
         </select>
     </label>
 
@@ -78,7 +78,7 @@
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
             <option value="GE">Greater or Equal</option>
-            <option value="GT">Greater</option>
+            <option value="GR">Greater</option>
         </select>
     </label>
 
@@ -90,7 +90,7 @@
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
             <option value="GE">Greater or Equal</option>
-            <option value="GT">Greater</option>
+            <option value="GR">Greater</option>
         </select>
     </label>
 
@@ -102,7 +102,7 @@
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
             <option value="GE">Greater or Equal</option>
-            <option value="GT">Greater</option>
+            <option value="GR">Greater</option>
         </select>
     </label>
 
@@ -115,7 +115,7 @@
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
             <option value="GE">Greater or Equal</option>
-            <option value="GT">Greater</option>
+            <option value="GR">Greater</option>
         </select>
     </label>
 
@@ -145,12 +145,12 @@
         Sort Sign
         <select name="sort-sign" bind:value={data["sort-sign"]}>
             <option value="LS">Less</option>
-            <option value="GT">Greater</option>
+            <option value="GR">Greater</option>
         </select>
     </label>
 
-    <label>Limit<input type="number" name="limit" bind:value={data.limit} /></label>
-    <label>Page<input type="number" name="page" bind:value={data.page} /></label>
+    <label>Limit<input type="number" name="limit" min="0" bind:value={data.limit} /></label>
+    <label>Page<input type="number" name="page" min="1" bind:value={data.page} /></label>
 
     <button on:click={() => sendData()}>Send Data</button>
 

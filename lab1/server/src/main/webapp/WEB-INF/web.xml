@@ -23,7 +23,7 @@
 
     <servlet-mapping>
         <servlet-name>basicOperationsPerformer</servlet-name>
-        <url-pattern>/basic-operations-performer/*</url-pattern>
+        <url-pattern>/vehicles/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>distanceCalculator</servlet-name>

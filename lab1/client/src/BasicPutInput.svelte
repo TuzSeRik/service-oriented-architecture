@@ -14,7 +14,7 @@
     }
 
     const sendData = async () => {
-        let answer = await fetch("http://localhost:8080/lab1_server_war_exploded/basic-operations-performer?"
+        let answer = await fetch("http://localhost:8080/lab1_server_war_exploded/vehicles?"
             + new URLSearchParams(data).toString(),
             {
                 method: 'PUT'

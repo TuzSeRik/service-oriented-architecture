@@ -6,7 +6,7 @@
 
     <groupId>dev.tuzserik.service.oriented.architecture</groupId>
     <artifactId>lab1-server</artifactId>
-    <version>0.9.9</version>
+    <version>1.0.0</version>
     <name>lab1-server</name>
     <packaging>war</packaging>
 

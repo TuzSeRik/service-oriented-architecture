@@ -13,8 +13,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import javax.validation.Validation;
 
-@WebServlet(name = "basicOperationsPerformer", value = "/basic-operations-performer")
+@WebServlet(name = "basicOperationsPerformer", value = "/vehicles")
 public class BasicOperationsPerformer extends HttpServlet {
     private Gson gson;
 
@@ -25,7 +26,7 @@ public class BasicOperationsPerformer extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Transaction transaction = null;
+        Transaction transaction;
 
         try (Session session = Datasource.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -42,6 +43,9 @@ public class BasicOperationsPerformer extends HttpServlet {
                             .setFuelType(parameters.getFuelType())
                     ;
 
+            if (!Validation.buildDefaultValidatorFactory().getValidator().validate(vehicle).isEmpty())
+                throw new Exception();
+
             Datasource.cachedVehicles.add(vehicle);
 
             transaction.commit();
@@ -51,12 +55,7 @@ public class BasicOperationsPerformer extends HttpServlet {
         }
         catch (Exception e) {
             e.printStackTrace();
-            response.getWriter().write(gson.toJson(e.getStackTrace()));
-            response.sendError(500);
-
-            if (transaction != null) {
-                transaction.rollback();
-            }
+            response.sendError(400);
         }
     }
 
@@ -86,10 +85,10 @@ public class BasicOperationsPerformer extends HttpServlet {
                     }
                     catch (Exception e) {
                         e.printStackTrace();
-                        response.sendError(500);
+                        response.sendError(400);
                     }
 
-                    response.sendError(500);
+                    response.sendError(400);
                 }
             }
             else {
@@ -101,19 +100,19 @@ public class BasicOperationsPerformer extends HttpServlet {
                 }
                 catch (Exception e) {
                     e.printStackTrace();
-                    response.sendError(500);
+                    response.sendError(400);
                 }
             }
         }
         catch (Exception e) {
             e.printStackTrace();
-            response.sendError(500);
+            response.sendError(400);
         }
     }
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Transaction transaction = null;
+        Transaction transaction;
 
         VehicleParameters parameters = new VehicleParameters(request);
 
@@ -139,23 +138,17 @@ public class BasicOperationsPerformer extends HttpServlet {
                 transaction = session.beginTransaction();
                 session.update(vehicle);
                 transaction.commit();
-
                 response.setStatus(200);
                 response.getWriter().write(gson.toJson(vehicle));
             } catch (Exception e) {
                 e.printStackTrace();
-                response.sendError(500);
-
-                if (transaction != null) {
-                    transaction.rollback();
-                }
+                response.sendError(400);
             }
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Transaction transaction = null;
         long id = Long.parseLong(request.getParameter("id"));
 
         List<Vehicle> filteredVehicle = Datasource.cachedVehicles.stream().filter(v -> v.getId() == id).collect(Collectors.toList());
@@ -165,7 +158,6 @@ public class BasicOperationsPerformer extends HttpServlet {
         }
         else
             try (Session session = Datasource.getSessionFactory().openSession()) {
-                transaction = session.beginTransaction();
                 Vehicle vehicle = QueryBuilder.getPreparedQuerySingleId(session, String.valueOf(id))
                         .getSingleResult();
 
@@ -174,19 +166,16 @@ public class BasicOperationsPerformer extends HttpServlet {
 
                 response.setStatus(200);
                 response.getWriter().write(gson.toJson(vehicle));
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 e.printStackTrace();
-                if (transaction != null) {
-                    transaction.rollback();
-                }
-
-                response.sendError(500);
+                response.sendError(400);
             }
     }
 
     @Override
     public void destroy() {
-        Transaction transaction = null;
+        Transaction transaction;
 
         try (Session session = Datasource.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
@@ -194,9 +183,6 @@ public class BasicOperationsPerformer extends HttpServlet {
             transaction.commit();
         }
         catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }

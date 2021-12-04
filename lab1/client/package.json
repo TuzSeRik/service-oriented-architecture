@@ -1,6 +1,6 @@
 {
   "name": "lab1-client",
-  "version": "0.9.9",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "rollup -c",
