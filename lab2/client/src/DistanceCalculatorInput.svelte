@@ -1,16 +1,16 @@
 <script>
-    export let response = {};
+    let responseBody = 0
+    $:  response = responseBody;
     let data = {}
 
     const sendData = async () => {
-        let answer = await fetch("http://localhost:8080/lab1_server_war_exploded/distance-calculator?"
+        let answer = await fetch("https://localhost:8181/service-one/distance-calculator?"
+        // let answer = await fetch("https://localhost:8443/service-one-0.9.0/distance-calculator?"
             + new URLSearchParams(data).toString(),
             {
                 method: 'GET'
             });
-        response = await answer.json();
-
-        console.log(response);
+        responseBody = await answer.json();
     }
 </script>
 

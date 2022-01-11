@@ -1,38 +1,40 @@
 <script>
     import Output from "./Output.svelte";
 
-    export let response = [];
+    let responseBody = {
+        vehicles: []
+    }
+    $: response = responseBody["vehicles"];
     let data = {
         'id': 0,
-        'id-sign': 'EQ',
+        'idSign': 'EQ',
         'name': 'Example',
-        'name-sign': 'LK',
-        'coordinate-x': 0,
-        'x-sign': 'EQ',
-        'coordinate-Y': 0,
-        'y-sign': 'EQ',
-        'engine-power': 0,
-        'engine-sign': 'EQ',
-        'number-of-wheels': 0,
-        'wheels-sign': 'EQ',
-        'distance-travelled': 0,
-        'distance-sign': 'EQ',
-        'fuel-type': 'ALCOHOL',
-        'sort-field': 'id',
-        'sort-sign': 'LS',
+        'nameSign': 'LK',
+        'coordinateX': 0,
+        'xSign': 'EQ',
+        'coordinateY': 0,
+        'ySign': 'EQ',
+        'enginePower': 0,
+        'engineSign': 'EQ',
+        'numberOfWheels': 0,
+        'wheelsSign': 'EQ',
+        'distanceTravelled': 0,
+        'distanceSign': 'EQ',
+        'fuelType': 'ALCOHOL',
+        'sortField': 'id',
+        'isDesc': true,
         'limit': 100,
         'page': 0
     }
 
     const sendData = async () => {
-        let answer = await fetch("http://localhost:8080/lab1_server_war_exploded/vehicles?"
+        let answer = await fetch("https://localhost:8181/service-one/vehicles?"
+        // let answer = await fetch("https://localhost:8443/service-one-0.9.0/vehicles?"
             + new URLSearchParams(data).toString(),
             {
-                method: 'GET'
+                method: 'GET',
             });
-        response = [...response, ...await answer.json()];
-
-        console.log(response);
+        responseBody = await answer.json();
     }
 </script>
 
@@ -40,7 +42,7 @@
     <label>Id<input type="number" name="id" bind:value={data.id} /></label>
     <label>
         Id Sign
-        <select name="id-sign" bind:value={data["id-sign"]}>
+        <select name="id-sign" bind:value={data["idSign"]}>
             <option value="LS">Less</option>
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
@@ -52,16 +54,16 @@
     <label>Name<input type="text" name="name" bind:value={data.name} /></label>
     <label>
         Name Sign
-        <select name="name-sign" bind:value={data["name-sign"]}>
+        <select name="name-sign" bind:value={data["nameSign"]}>
             <option value="LK">Like</option>
             <option value="EQ">Equal</option>
         </select>
     </label>
 
-    <label>Coordinate X<input type="number" name="coordinate-x" min="-885" bind:value={data["coordinate-x"]} /></label>
+    <label>Coordinate X<input type="number" name="coordinate-x" min="-885" bind:value={data["coordinateX"]} /></label>
     <label>
         X Sign
-        <select name="x-sign" bind:value={data["x-sign"]}>
+        <select name="x-sign" bind:value={data["xSign"]}>
             <option value="LS">Less</option>
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
@@ -70,10 +72,10 @@
         </select>
     </label>
 
-    <label>Coordinate Y<input type="number" name="coordinate-y" min="-29" bind:value={data["coordinate-Y"]} /></label>
+    <label>Coordinate Y<input type="number" name="coordinate-y" min="-29" bind:value={data["coordinateY"]} /></label>
     <label>
         Y Sign
-        <select name="y-sign" bind:value={data["y-sign"]}>
+        <select name="y-sign" bind:value={data["ySign"]}>
             <option value="LS">Less</option>
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
@@ -82,10 +84,10 @@
         </select>
     </label>
 
-    <label>Engine Power<input type="number" name="engine-power" min="0" bind:value={data["engine-power"]} /></label>
+    <label>Engine Power<input type="number" name="engine-power" min="0" bind:value={data["enginePower"]} /></label>
     <label>
         Engine Sign
-        <select name="engine-sign" bind:value={data["engine-sign"]}>
+        <select name="engine-sign" bind:value={data["engineSign"]}>
             <option value="LS">Less</option>
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
@@ -94,10 +96,10 @@
         </select>
     </label>
 
-    <label>Number of Wheels<input type="number" name="number-of-wheels" min="0" bind:value={data["number-of-wheels"]} /></label>
+    <label>Number of Wheels<input type="number" name="number-of-wheels" min="0" bind:value={data["numberOfWheels"]} /></label>
     <label>
         Wheels Sign
-        <select name="wheels-sign" bind:value={data["wheels-sign"]}>
+        <select name="wheels-sign" bind:value={data["wheelsSign"]}>
             <option value="LS">Less</option>
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
@@ -107,10 +109,10 @@
     </label>
 
     <label>Distance Travelled<input type="number" name="distance-travelled" min="0"
-                                    bind:value={data["distance-travelled"]} /></label>
+                                    bind:value={data["distanceTravelled"]} /></label>
     <label>
         Distance Sign
-        <select name="distance-sign" bind:value={data["distance-sign"]}>
+        <select name="distance-sign" bind:value={data["distanceSign"]}>
             <option value="LS">Less</option>
             <option value="LE">Less or Equal</option>
             <option value="EQ">Equal</option>
@@ -121,7 +123,7 @@
 
     <label>
         Fuel Type
-        <select name="fuel-type" bind:value={data["fuel-type"]}>
+        <select name="fuel-type" bind:value={data["fuelType"]}>
             <option value="ALCOHOL">Alcohol</option>
             <option value="MANPOWER">Manpower</option>
             <option value="NUCLEAR">Nuclear</option>
@@ -130,7 +132,7 @@
 
     <label>
         Sort Field
-        <select name="sort-field" bind:value={data["sort-field"]}>
+        <select name="sort-field" bind:value={data["sortField"]}>
             <option value="id">Id</option>
             <option value="name">Name</option>
             <option value="coordinateX">Coordinate X</option>
@@ -143,9 +145,9 @@
     </label>
     <label>
         Sort Sign
-        <select name="sort-sign" bind:value={data["sort-sign"]}>
-            <option value="LS">Less</option>
-            <option value="GR">Greater</option>
+        <select name="isDesc" bind:value={data["isDesc"]}>
+            <option value="true">Less</option>
+            <option value="false">Greater</option>
         </select>
     </label>
 

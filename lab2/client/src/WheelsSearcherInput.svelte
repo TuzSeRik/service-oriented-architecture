@@ -1,26 +1,28 @@
 <script>
     import Output from "./Output.svelte";
 
-    export let response = [];
+    let responseBody = {
+        vehicles: []
+    }
+    $: response = responseBody["vehicles"];
     let data = {
-        'wheels-number-equal': 0
+        'number': 0
     }
 
     const sendData = async () => {
-        let answer = await fetch("http://localhost:8080/lab1_server_war_exploded/wheels-number-searcher?"
+        let answer = await fetch("https://localhost:8181/service-one/wheels-number-searcher?"
+        // let answer = await fetch("https://localhost:8443/service-one-0.9.0/wheels-number-searcher?"
             + new URLSearchParams(data).toString(),
             {
                 method: 'GET'
             });
-        response = [...response, ...await answer.json()];
-
-        console.log(response);
+        responseBody = await answer.json();
     }
 </script>
 
 <main>
     <label>Wheels Number Equal<input type="number" name="wheels-number-equal" min="0"
-                                    bind:value={data["wheels-number-equal"]}></label>
+                                    bind:value={data["number"]}></label>
     <button on:click={() => sendData()}>Send Data</button>
 
     <Output {response} />

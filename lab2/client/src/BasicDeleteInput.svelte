@@ -1,18 +1,20 @@
 <script>
-    export let response = [];
+    let responseBody = {
+        vehicles: []
+    }
+    $: response = responseBody["vehicles"];
     let data = {
         'id': 0
     }
 
     const sendData = async () => {
-        let answer = await fetch("http://localhost:8080/lab1_server_war_exploded/vehicles?"
+        let answer = await fetch("https://localhost:8181/service-one/vehicles?"
+        // let answer = await fetch("https://localhost:8443/service-one-0.9.0/vehicles?"
             + new URLSearchParams(data).toString(),
             {
                 method: 'DELETE'
             });
-        response = [...response, await answer.json()];
-
-        console.log(response);
+        responseBody = await answer.json();
     }
 </script>
 

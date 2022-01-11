@@ -1,26 +1,28 @@
 <script>
     import Output from "./Output.svelte";
 
-    export let response = [];
+    let responseBody = {
+        vehicles: []
+    }
+    $: response = responseBody["vehicles"];
     let data = {
-        'distance-travelled-less-than': 0
+        'distance': 0
     }
 
     const sendData = async () => {
-        let answer = await fetch("http://localhost:8080/lab1_server_war_exploded/distance-travelled-searcher?"
+        let answer = await fetch("https://localhost:8181/service-one/distance-travelled-searcher?"
+        // let answer = await fetch("https://localhost:8443/service-one-0.9.0/distance-travelled-searcher?"
             + new URLSearchParams(data).toString(),
             {
                 method: 'GET'
             });
-        response = [...response, ...await answer.json()];
-
-        console.log(response);
+        responseBody = await answer.json();
     }
 </script>
 
 <main>
     <label>Distance Travelled Less Than<input type="number" name="distance-travelled-less-than" min="0"
-                                    bind:value={data["distance-travelled-less-than"]}></label>
+                                    bind:value={data["distance"]}></label>
     <button on:click={() => sendData()}>Send Data</button>
 
     <Output {response} />

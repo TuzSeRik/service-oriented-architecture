@@ -3,7 +3,7 @@
 </script>
 
 <main>
-    {#each response as vehicle(vehicle.id)}
+    {#each response as vehicle (vehicle.id)}
         <div>Id - {vehicle.id}</div>
         <div>Name - {vehicle.name}</div>
         <div>Creation Date - {vehicle.creationDate}</div>

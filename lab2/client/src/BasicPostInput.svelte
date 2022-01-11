@@ -1,39 +1,47 @@
 <script>
     import Output from "./Output.svelte";
 
-    export let response = [];
+    let responseBody = {
+        vehicles: []
+    }
+    $: response = responseBody["vehicles"];
     let data = {
         'name': 'Example',
-        'coordinate-x': 0,
-        'coordinate-y': 0,
-        'engine-power': 0,
-        'number-of-wheels': 0,
-        'distance-travelled': 0,
-        'fuel-type': 'ALCOHOL'
+        'coordinates': {
+            'id': 0,
+            'x': 0,
+            'y': 0
+        },
+        'enginePower': 0,
+        'numberOfWheels': 0,
+        'distanceTravelled': 0,
+        'fuelType': 'ALCOHOL'
     }
 
     const sendData = async () => {
-        let answer = await fetch("http://localhost:8080/lab1_server_war_exploded/vehicles?"
-            + new URLSearchParams(data).toString(),
+        let answer = await fetch("https://localhost:8181/service-one/vehicles",
+        // let answer = await fetch("https://localhost:8443/service-one-0.9.0/vehicles",
             {
-                method: 'POST'
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             });
-        response = [...response, await answer.json()];
-
-        console.log(response);
+        responseBody = await answer.json();
     }
 </script>
 
 <main>
-    <label>Name<input type="text" name="name" bind:value={data.name}></label>
-    <label>Coordinate X<input type="number" name="coordinate-x" min="-885" bind:value={data["coordinate-x"]}></label>
-    <label>Coordinate Y<input type="number" name="coordinate-y" min="29" bind:value={data["coordinate-y"]}></label>
-    <label>Engine Power<input type="number" name="engine-power" min="0" bind:value={data["engine-power"]}></label>
-    <label>Number of Wheels<input type="number" name="number-of-wheels" min="0" bind:value={data["number-of-wheels"]}></label>
-    <label>Distance Travelled<input type="number" name="distance-travelled" min="0" bind:value={data["distance-travelled"]}></label>
+    <label>Name<input type="text" name="name" bind:value={data["name"]}></label>
+    <label>Coordinate X<input type="number" name="coordinate-x" min="-885" bind:value={data["coordinates"]["x"]}></label>
+    <label>Coordinate Y<input type="number" name="coordinate-y" min="-29" bind:value={data["coordinates"]["y"]}></label>
+    <label>Engine Power<input type="number" name="engine-power" min="0" bind:value={data["enginePower"]}></label>
+    <label>Number of Wheels<input type="number" name="number-of-wheels" min="0" bind:value={data["numberOfWheels"]}></label>
+    <label>Distance Travelled<input type="number" name="distance-travelled" min="0" bind:value={data["distanceTravelled"]}></label>
     <label>
         Fuel Type
-        <select name="fuel-type" bind:value={data["fuel-type"]}>
+        <select name="fuel-type" bind:value={data["fuelType"]}>
             <option value="ALCOHOL">Alcohol</option>
             <option value="MANPOWER">Manpower</option>
             <option value="NUCLEAR">Nuclear</option>

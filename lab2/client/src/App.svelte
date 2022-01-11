@@ -6,35 +6,47 @@ import BasicDeleteInput from "./BasicDeleteInput.svelte";
 import DistanceCalculatorInput from "./DistanceCalculatorInput.svelte";
 import DistanceSearcherInput from "./DistanceSearcherInput.svelte";
 import WheelsSearcherInput from "./WheelsSearcherInput.svelte";
+import ByTypeSearcher from "./ByTypeSearcher.svelte";
+import ByWheelsSearcher from "./ByWheelsSearcher.svelte";
 
-let form = 0;
+let formValue = 0;
+$: form = formValue;
 </script>
 
 <main>
-    <h1>Welcome to 1st lab work!</h1>
+    <h1>Welcome to SOA lab works client!</h1>
 
     <table>
         <tr>
             <th>Basic Operations</th>
             <th>Additional Operations</th>
+            <th>2nd Lab Operations</th>
         </tr>
         <tr>
             <td>
                 <table>
                     <tr>
-                        <td><input type="radio" bind:group={form} name="form" value={1}/>POST</td>
-                        <td><input type="radio" bind:group={form} name="form" value={2}/>GET</td>
-                        <td><input type="radio" bind:group={form} name="form" value={3}/>PUT</td>
-                        <td><input type="radio" bind:group={form} name="form" value={4}/>DELETE</td>
+                        <td><input type="radio" bind:group={formValue} name="form" value={1}/>POST</td>
+                        <td><input type="radio" bind:group={formValue} name="form" value={2}/>GET</td>
+                        <td><input type="radio" bind:group={formValue} name="form" value={3}/>PUT</td>
+                        <td><input type="radio" bind:group={formValue} name="form" value={4}/>DELETE</td>
                     </tr>
                 </table>
             </td>
             <td>
                 <table>
                     <tr>
-                        <td><input type="radio" bind:group={form} name="form" value={5}/>Distance Calculator</td>
-                        <td><input type="radio" bind:group={form} name="form" value={6}/>Distance Searcher</td>
-                        <td><input type="radio" bind:group={form} name="form" value={7}/>Wheels Searcher</td>
+                        <td><input type="radio" bind:group={formValue} name="form" value={5}/>Distance Calculator</td>
+                        <td><input type="radio" bind:group={formValue} name="form" value={6}/>Distance Searcher</td>
+                        <td><input type="radio" bind:group={formValue} name="form" value={7}/>Wheels Searcher</td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td><input type="radio" bind:group={formValue} name="form" value={8}/>By Type Searcher</td>
+                        <td><input type="radio" bind:group={formValue} name="form" value={9}/>By Wheels Searcher</td>
                     </tr>
                 </table>
             </td>
@@ -55,6 +67,10 @@ let form = 0;
         <DistanceSearcherInput />
     {:else if (form === 7)}
         <WheelsSearcherInput />
+    {:else if (form === 8)}
+        <ByTypeSearcher />
+    {:else if (form === 9)}
+        <ByWheelsSearcher />
     {/if}
 </main>
 
