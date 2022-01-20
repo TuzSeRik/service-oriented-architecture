@@ -11,7 +11,7 @@
 
     <groupId>dev.tuserik.service.oriented.architecture.lab2</groupId>
     <artifactId>service-two</artifactId>
-    <version>0.9.0</version>
+    <version>1.0.0</version>
     <packaging>war</packaging>
     <name>service-two</name>
     <description>service-two</description>

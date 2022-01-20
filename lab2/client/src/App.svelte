@@ -20,7 +20,7 @@ $: form = formValue;
         <tr>
             <th>Basic Operations</th>
             <th>Additional Operations</th>
-            <th>2nd Lab Operations</th>
+            <th>2nd Lab Work Operations</th>
         </tr>
         <tr>
             <td>
