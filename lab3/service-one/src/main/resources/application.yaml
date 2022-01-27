@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: service-one
+  cloud:
+    config:
+      enabled: false
+
+server:
+  port: 7443
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+      registerWithEureka: true
+      fetchRegistry: true

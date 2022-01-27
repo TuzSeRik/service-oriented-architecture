@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations:  classpath:/service-one
+
+server:
+  port: 8761
+
+eureka:
+  server:
+    renewal-percent-threshold: 0.85
+  client:
+    register-with-eureka: false
+    fetch-registry: false
