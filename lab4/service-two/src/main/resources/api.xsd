@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.baeldung.com/springsoap/gen"
+           targetNamespace="http://www.baeldung.com/springsoap/gen" elementFormDefault="qualified">
+
+    <xs:element name="searchByTypeRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="type" type="tns:fuel" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="searchByTypeResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicle" type="tns:vehicle"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="searchByWheelsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="from" type="xs:int"/>
+                <xs:element name="to" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="searchByWheelsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vehicle" type="tns:vehicle"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="vehicle">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="coordinates">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="id" type="xs:long"/>
+                        <xs:element name="x" type="xs:long"/>
+                        <xs:element name="y" type="xs:float" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="creationDate" type="xs:dateTime" />
+            <xs:element name="enginePower" type="xs:float" />
+            <xs:element name="numberOfWheels" type="xs:int" />
+            <xs:element name="distanceTravelled" type="xs:double" />
+            <xs:element name="fuelType" type="tns:fuel" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="fuel">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ALCOHOL"/>
+            <xs:enumeration value="NUCLEAR"/>
+            <xs:enumeration value="MANPOWER"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

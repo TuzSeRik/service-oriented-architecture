@@ -11,7 +11,7 @@
     }
 
     const sendData = async () => {
-        let answer = await fetch("http://localhost:666/search/by-number-of-wheels/"
+        let answer = await fetch("http://localhost:8081/search/by-number-of-wheels/"
             + data["from"] + "/" + data["to"],
             {
                 method: 'GET'

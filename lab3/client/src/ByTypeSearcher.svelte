@@ -10,7 +10,7 @@
     }
 
     const sendData = async () => {
-        let answer = await fetch("http://localhost:666/search/by-type/"
+        let answer = await fetch("http://localhost:8081/search/by-type/"
             + data["fuelType"],
             {
                 method: 'GET'

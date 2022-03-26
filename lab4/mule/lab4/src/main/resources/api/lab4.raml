@@ -1,0 +1,138 @@
+#%RAML 1.0
+title: Lab4
+mediaType:
+  - application/json
+version: "1.0"
+protocols:
+  - HTTP
+/search/by-number-of-wheels/:
+  options:
+    headers:
+      Origin?:
+        example: Example
+        type: string
+      Access-Control-Request-Method?:
+        example: Example
+        type: string
+      Access-Control-Request-Headers?:
+        example: Example
+        type: string
+    responses:
+      "200": {}
+  get:
+    responses:
+      "200":
+        body:
+          items:
+            properties:
+              id:
+                example: 1
+                type: number
+                format: long
+              name:
+                example: Example
+                type: string
+              coordinates:
+                properties:
+                  id:
+                    example: 1
+                    type: number
+                    format: long
+                  x:
+                    example: 1
+                    type: number
+                    format: long
+                  y:
+                    example: 1
+                    type: number
+                    format: float
+              creationDate:
+                example: 2022-03-11T06:59:49.814Z
+                type: datetime
+                format: rfc3339
+              enginePower:
+                example: 1
+                type: number
+                format: float
+              numberOfWheels:
+                example: 1
+                type: number
+                format: int
+              distanceTravelled:
+                example: 1
+                type: number
+                format: double
+              fuelType:
+                example: Example
+                type: string
+    queryParameters:
+      to:
+        example: 1
+        type: number
+        format: int
+/search/by-type/:
+  get:
+    responses:
+      "200":
+        body:
+          application/json:
+            items:
+              properties:
+                id:
+                  example: 1
+                  type: number
+                  format: long
+                name:
+                  example: Example
+                  type: string
+                coordinates:
+                  properties:
+                    id:
+                      example: 1
+                      type: number
+                      format: long
+                    x:
+                      example: 1
+                      type: number
+                      format: long
+                    y:
+                      example: 1
+                      type: number
+                      format: float
+                creationDate:
+                  example: 2022-03-11T06:45:29.064Z
+                  type: datetime
+                  format: rfc3339
+                enginePower:
+                  example: 1
+                  type: number
+                  format: float
+                numberOfWheels:
+                  example: 1
+                  type: number
+                  format: int
+                distanceTravelled:
+                  example: 1
+                  type: number
+                  format: double
+                fuelType:
+                  example: Example
+                  type: string
+    queryParameters:
+      type:
+        example: Example
+        type: string
+  options:
+    headers:
+      Origin?:
+        example: Example
+        type: string
+      Access-Control-Request-Method?:
+        example: Example
+        type: string
+      Access-Control-Request-Headers?:
+        example: Example
+        type: string
+    responses:
+      "200": {}
+baseUri: /*
